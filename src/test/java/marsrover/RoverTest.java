@@ -369,4 +369,30 @@ public class RoverTest {
         Assertions.assertEquals(Direction.W, rover.getDirection());
     }
 
+    @Test
+    public void should_stop_at_1_3_S_when_start_at_1_3_S_and_execute_forward_command() {
+        //Given
+        Rover rover = new Rover(Point.of(1, 3), Direction.S, limit, obstacles);
+
+        //When
+        rover.execute(FORWARD_COMMAND);
+
+        //Then
+        Assertions.assertEquals(Point.of(1, 3), rover.getPoint());
+        Assertions.assertEquals(Direction.S, rover.getDirection());
+    }
+
+    @Test
+    public void should_stop_at_1_3_N_when_start_at_1_3_N_and_execute_backward_command() {
+        //Given
+        Rover rover = new Rover(Point.of(1, 3), Direction.N, limit, obstacles);
+
+        //When
+        rover.execute(BACKWARD_COMMAND);
+
+        //Then
+        Assertions.assertEquals(Point.of(1, 3), rover.getPoint());
+        Assertions.assertEquals(Direction.N, rover.getDirection());
+    }
+
 }
