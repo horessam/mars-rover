@@ -12,8 +12,10 @@ public class Rover {
     private static final char BACKWARD_COMMAND = 'B';
     private static final char TURN_RIGHT_COMMAND = 'R';
     private static final char TURN_LEFT_COMMAND = 'L';
+
     private final Point limit;
     private final List<Point> obstacles;
+
     private Point point;
     private Direction direction;
 
@@ -40,7 +42,6 @@ public class Rover {
         this.direction = direction;
     }
 
-
     public void execute(String sequenceCommand) {
         for (int i = 0; i < sequenceCommand.length(); i++) {
             execute(sequenceCommand.charAt(i));
@@ -62,6 +63,7 @@ public class Rover {
             case N -> setDirection(W);
             case E -> setDirection(N);
             case S -> setDirection(E);
+            case W -> setDirection(S);
         }
     }
 

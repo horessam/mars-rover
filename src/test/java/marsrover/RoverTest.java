@@ -188,6 +188,19 @@ public class RoverTest {
     }
 
     @Test
+    public void should_ends_at_0_0_S_when_start_at_0_0_W_and_execute_left_command() {
+        //Given
+        Rover rover = new Rover(Point.of(0, 0), Direction.W, limit, Collections.emptyList());
+
+        //When
+        rover.execute(TURN_LEFT_COMMAND);
+
+        //Then
+        Assertions.assertEquals(Point.of(0, 0), rover.getPoint());
+        Assertions.assertEquals(Direction.S, rover.getDirection());
+    }
+
+    @Test
     public void should_ends_at_1_1_E_when_start_at_5_1_E_and_execute_forward_command() {
         //Given
         Rover rover = new Rover(Point.of(5, 1), Direction.E, limit, Collections.emptyList());
