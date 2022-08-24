@@ -10,12 +10,14 @@ public class Rover {
     private static final char BACKWARD_COMMAND = 'B';
     private static final char TURN_RIGHT_COMMAND = 'R';
     private static final char TURN_LEFT_COMMAND = 'L';
+    private final Point limit;
     private Point point;
     private Direction direction;
 
-    public Rover(Point point, Direction direction) {
+    public Rover(Point point, Direction direction, Point limit) {
         this.point = point;
         this.direction = direction;
+        this.limit = limit;
     }
 
     public Point getPoint() {
@@ -87,7 +89,12 @@ public class Rover {
     }
 
     private void goToWest() {
-        setPoint(Point.of(this.point.x() - 1, this.point.y()));
+        int x = this.point.x();
+        if (x > 1) {
+            setPoint(Point.of(this.point.x() - 1, this.point.y()));
+        } else {
+            setPoint(Point.of(this.limit.x(), this.point.y()));
+        }
     }
 
     private void goToEast() {
