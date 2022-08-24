@@ -48,11 +48,13 @@ public class Rover {
             case TURN_RIGHT_COMMAND -> {
                 switch (this.direction) {
                     case N -> setDirection(Direction.E);
+                    case E -> setDirection(Direction.S);
                 }
             }
             case TURN_LEFT_COMMAND -> {
                 switch (this.direction) {
                     case N -> setDirection(Direction.W);
+                    case E -> setDirection(Direction.N);
                 }
             }
         }
