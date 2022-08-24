@@ -99,26 +99,22 @@ public class Rover {
         int x = this.point.x();
         int y = this.point.y();
         int limitY = this.limit.y();
-        int newX;
-        int newY;
+        Point newPoint;
         if (y < limitY) {
-            newX = x;
-            newY = y + 1;
+            newPoint = Point.of(x, y+1);
         } else {
-            newX = 1;
-            newY = 1;
+            newPoint = Point.of(1, 1);
         }
-        if (!hasObstacle(newX, newY)) {
-            setPoint(Point.of(newX, newY));
+        if (!hasObstacle(newPoint)) {
+            setPoint(newPoint);
         }
     }
 
-    private boolean hasObstacle(int newX, int newY) {
+    private boolean hasObstacle(Point roverNewPoint) {
         for (Point obstacle : obstacles)
-            if (newX == obstacle.x() && newY == obstacle.y()) {
+            if (obstacle.equals(roverNewPoint)) {
                 return true;
             }
-
         return false;
     }
 
@@ -138,10 +134,14 @@ public class Rover {
         int x = this.point.x();
         int y = this.point.y();
         int limitX = this.limit.x();
+        Point newPoint;
         if (x < limitX) {
-            setPoint(Point.of(x + 1, y));
+            newPoint = Point.of(x + 1, y);
         } else {
-            setPoint(Point.of(1, y));
+            newPoint = Point.of(1, y);
+        }
+        if (!hasObstacle(newPoint)) {
+            setPoint(newPoint);
         }
     }
 }
