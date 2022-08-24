@@ -29,34 +29,42 @@ public class Rover {
 
     public void execute(char command) {
         switch (command) {
-            case FORWARD_COMMAND -> {
-                switch (this.direction) {
-                    case E -> goToEast();
-                    case W -> goToWest();
-                    case N -> goToNorth();
-                    case S -> goToSouth();
-                }
-            }
-            case BACKWARD_COMMAND -> {
-                switch (this.direction) {
-                    case E -> goToWest();
-                    case W -> goToEast();
-                    case N -> goToSouth();
-                    case S -> goToNorth();
-                }
-            }
-            case TURN_RIGHT_COMMAND -> {
-                switch (this.direction) {
-                    case N -> setDirection(Direction.E);
-                    case E -> setDirection(Direction.S);
-                }
-            }
-            case TURN_LEFT_COMMAND -> {
-                switch (this.direction) {
-                    case N -> setDirection(Direction.W);
-                    case E -> setDirection(Direction.N);
-                }
-            }
+            case FORWARD_COMMAND -> forward();
+            case BACKWARD_COMMAND -> backward();
+            case TURN_RIGHT_COMMAND -> turnRight();
+            case TURN_LEFT_COMMAND -> turnLeft();
+        }
+    }
+
+    private void turnLeft() {
+        switch (this.direction) {
+            case N -> setDirection(Direction.W);
+            case E -> setDirection(Direction.N);
+        }
+    }
+
+    private void turnRight() {
+        switch (this.direction) {
+            case N -> setDirection(Direction.E);
+            case E -> setDirection(Direction.S);
+        }
+    }
+
+    private void backward() {
+        switch (this.direction) {
+            case E -> goToWest();
+            case W -> goToEast();
+            case N -> goToSouth();
+            case S -> goToNorth();
+        }
+    }
+
+    private void forward() {
+        switch (this.direction) {
+            case E -> goToEast();
+            case W -> goToWest();
+            case N -> goToNorth();
+            case S -> goToSouth();
         }
     }
 
