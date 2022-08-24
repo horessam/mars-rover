@@ -1,3 +1,10 @@
+package marsrover;
+
+import static marsrover.Direction.E;
+import static marsrover.Direction.N;
+import static marsrover.Direction.S;
+import static marsrover.Direction.W;
+
 public class Rover {
     public static final char FORWARD_COMMAND = 'F';
     private static final char BACKWARD_COMMAND = 'B';
@@ -38,18 +45,19 @@ public class Rover {
 
     private void turnLeft() {
         switch (this.direction) {
-            case N -> setDirection(Direction.W);
-            case E -> setDirection(Direction.N);
-            case S -> setDirection(Direction.E);
+            case N -> setDirection(W);
+            case E -> setDirection(N);
+            case S -> setDirection(E);
         }
     }
 
     private void turnRight() {
-        switch (this.direction) {
-            case N -> setDirection(Direction.E);
-            case E -> setDirection(Direction.S);
-            case S -> setDirection(Direction.W);
-        }
+        setDirection(switch (this.direction) {
+            case N -> E;
+            case E -> S;
+            case S -> W;
+            case W -> N;
+        });
     }
 
     private void backward() {

@@ -1,3 +1,5 @@
+package marsrover;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -187,6 +189,19 @@ public class RoverTest {
         //Then
         Assertions.assertEquals(Point.of(0, 0), rover.getPoint());
         Assertions.assertEquals(Direction.E, rover.getDirection());
+    }
+
+    @Test
+    public void should_ends_at_0_0_N_when_start_at_0_0_W_and_execute_right_command() {
+        //Given
+        Rover rover = new Rover(Point.of(0, 0), Direction.W);
+
+        //When
+        rover.execute(TURN_RIGHT_COMMAND);
+
+        //Then
+        Assertions.assertEquals(Point.of(0, 0), rover.getPoint());
+        Assertions.assertEquals(Direction.N, rover.getDirection());
     }
 
 }
