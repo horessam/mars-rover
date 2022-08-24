@@ -40,6 +40,7 @@ public class Rover {
         switch (this.direction) {
             case N -> setDirection(Direction.W);
             case E -> setDirection(Direction.N);
+            case S -> setDirection(Direction.E);
         }
     }
 
@@ -47,6 +48,7 @@ public class Rover {
         switch (this.direction) {
             case N -> setDirection(Direction.E);
             case E -> setDirection(Direction.S);
+            case S -> setDirection(Direction.W);
         }
     }
 
