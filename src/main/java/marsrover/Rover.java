@@ -81,18 +81,22 @@ public class Rover {
     }
 
     private void goToSouth() {
+        int x = this.point.x();
         int y = this.point.y();
+        int limitX = this.limit.x();
         if (y > 1) {
-            setPoint(Point.of(this.point.x(), this.point.y() - 1));
+            setPoint(Point.of(x, y - 1));
         } else {
-            setPoint(Point.of(this.limit.x(), this.point.y()));
+            setPoint(Point.of(limitX, y));
         }
     }
 
     private void goToNorth() {
+        int x = this.point.x();
         int y = this.point.y();
-        if (y < this.limit.y()) {
-            setPoint(Point.of(this.point.x(), y + 1));
+        int limitY = this.limit.y();
+        if (y < limitY) {
+            setPoint(Point.of(x, y + 1));
         } else {
             setPoint(Point.of(1, 1));
         }
@@ -100,19 +104,23 @@ public class Rover {
 
     private void goToWest() {
         int x = this.point.x();
+        int y = this.point.y();
+        int limitX = this.limit.x();
         if (x > 1) {
-            setPoint(Point.of(this.point.x() - 1, this.point.y()));
+            setPoint(Point.of(x - 1, y));
         } else {
-            setPoint(Point.of(this.limit.x(), this.point.y()));
+            setPoint(Point.of(limitX, y));
         }
     }
 
     private void goToEast() {
         int x = this.point.x();
-        if (x < this.limit.x()) {
-            setPoint(Point.of(this.point.x() + 1, this.point.y()));
+        int y = this.point.y();
+        int limitX = this.limit.x();
+        if (x < limitX) {
+            setPoint(Point.of(x + 1, y));
         } else {
-            setPoint(Point.of(1, this.point.y()));
+            setPoint(Point.of(1, y));
         }
     }
 }
