@@ -1,5 +1,7 @@
 package marsrover;
 
+import java.util.List;
+
 import static marsrover.Direction.E;
 import static marsrover.Direction.N;
 import static marsrover.Direction.S;
@@ -11,13 +13,15 @@ public class Rover {
     private static final char TURN_RIGHT_COMMAND = 'R';
     private static final char TURN_LEFT_COMMAND = 'L';
     private final Point limit;
+    private final List<Point> obstacles;
     private Point point;
     private Direction direction;
 
-    public Rover(Point point, Direction direction, Point limit) {
+    public Rover(Point point, Direction direction, Point limit, List<Point> obstacles) {
         this.point = point;
         this.direction = direction;
         this.limit = limit;
+        this.obstacles = obstacles;
     }
 
     public Point getPoint() {
@@ -95,12 +99,29 @@ public class Rover {
         int x = this.point.x();
         int y = this.point.y();
         int limitY = this.limit.y();
+        int newX;
+        int newY;
         if (y < limitY) {
-            setPoint(Point.of(x, y + 1));
+            newX = x;
+            newY = y + 1;
         } else {
-            setPoint(Point.of(1, 1));
+            newX = 1;
+            newY = 1;
+        }
+        if (!hasObstacle(newX, newY)) {
+            setPoint(Point.of(newX, newY));
         }
     }
+
+    private boolean hasObstacle(int newX, int newY) {
+        for (Point obstacle : obstacles)
+            if (newX == obstacle.x() && newY == obstacle.y()) {
+                return true;
+            }
+
+        return false;
+    }
+
 
     private void goToWest() {
         int x = this.point.x();
