@@ -8,7 +8,7 @@ import static marsrover.Direction.S;
 import static marsrover.Direction.W;
 
 public class Rover {
-    public static final char FORWARD_COMMAND = 'F';
+    private static final char FORWARD_COMMAND = 'F';
     private static final char BACKWARD_COMMAND = 'B';
     private static final char TURN_RIGHT_COMMAND = 'R';
     private static final char TURN_LEFT_COMMAND = 'L';
@@ -31,7 +31,9 @@ public class Rover {
     }
 
     public void setPoint(Point point) {
-        this.point = point;
+        if (!hasObstacle(point)) {
+            this.point = point;
+        }
     }
 
     public Direction getDirection() {
@@ -97,38 +99,30 @@ public class Rover {
     private void goToSouth() {
         int y = this.point.y();
         Point newPoint = y > 1 ? Point.of(this.point.x(), y - 1) : Point.of(this.limit.x(), y);
-        if (!hasObstacle(newPoint)) {
-            setPoint(newPoint);
-        }
+        setPoint(newPoint);
     }
 
     private void goToNorth() {
         int y = this.point.y();
         Point newPoint = y < this.limit.y() ? Point.of(this.point.x(), y + 1) : Point.of(1, 1);
-        if (!hasObstacle(newPoint)) {
-            setPoint(newPoint);
-        }
+        setPoint(newPoint);
     }
 
     private void goToWest() {
         int x = this.point.x();
         Point newPoint = x > 1 ? Point.of(x - 1, this.point.y()) : Point.of(this.limit.x(), this.point.y());
-        if (!hasObstacle(newPoint)) {
-            setPoint(newPoint);
-        }
+        setPoint(newPoint);
     }
 
     private void goToEast() {
         int x = this.point.x();
         Point newPoint = x < this.limit.x() ? Point.of(x + 1, this.point.y()) : Point.of(1, this.point.y());
-        if (!hasObstacle(newPoint)) {
-            setPoint(newPoint);
-        }
+        setPoint(newPoint);
     }
 
-    private boolean hasObstacle(Point roverNewPoint) {
+    private boolean hasObstacle(Point point) {
         for (Point obstacle : obstacles)
-            if (obstacle.equals(roverNewPoint)) {
+            if (obstacle.equals(point)) {
                 return true;
             }
         return false;
