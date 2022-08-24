@@ -456,4 +456,17 @@ public class RoverTest {
         Assertions.assertEquals(Direction.N, rover.getDirection());
     }
 
+    @Test
+    public void should_ends_at_4_2_E_when_start_at_1_1_N_and_execute_sequence_command_() {
+        //Given
+        Rover rover = new Rover(Point.of(1, 1), Direction.N, limit, Collections.emptyList());
+
+        //When
+        rover.execute("LBBLBLF");
+
+        //Then
+        Assertions.assertEquals(Point.of(4, 2), rover.getPoint());
+        Assertions.assertEquals(Direction.E, rover.getDirection());
+    }
+
 }

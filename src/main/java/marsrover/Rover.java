@@ -59,12 +59,12 @@ public class Rover {
     }
 
     private void turnLeft() {
-        switch (this.direction) {
-            case N -> setDirection(W);
-            case E -> setDirection(N);
-            case S -> setDirection(E);
-            case W -> setDirection(S);
-        }
+        setDirection(switch (this.direction) {
+            case N -> W;
+            case E -> N;
+            case S -> E;
+            case W -> S;
+        });
     }
 
     private void turnRight() {
@@ -76,15 +76,6 @@ public class Rover {
         });
     }
 
-    private void backward() {
-        switch (this.direction) {
-            case E -> goToWest();
-            case W -> goToEast();
-            case N -> goToSouth();
-            case S -> goToNorth();
-        }
-    }
-
     private void forward() {
         switch (this.direction) {
             case E -> goToEast();
@@ -94,31 +85,26 @@ public class Rover {
         }
     }
 
-    private void goToSouth() {
-        int x = this.point.x();
-        int y = this.point.y();
-        int limitX = this.limit.x();
-        Point newPoint;
-        if (y > 1) {
-            newPoint = Point.of(x, y - 1);
-        } else {
-            newPoint = Point.of(limitX, y);
+    private void backward() {
+        switch (this.direction) {
+            case E -> goToWest();
+            case W -> goToEast();
+            case N -> goToSouth();
+            case S -> goToNorth();
         }
+    }
+
+    private void goToSouth() {
+        int y = this.point.y();
+        Point newPoint = y > 1 ? Point.of(this.point.x(), y - 1) : Point.of(this.limit.x(), y);
         if (!hasObstacle(newPoint)) {
             setPoint(newPoint);
         }
     }
 
     private void goToNorth() {
-        int x = this.point.x();
         int y = this.point.y();
-        int limitY = this.limit.y();
-        Point newPoint;
-        if (y < limitY) {
-            newPoint = Point.of(x, y + 1);
-        } else {
-            newPoint = Point.of(1, 1);
-        }
+        Point newPoint = y < this.limit.y() ? Point.of(this.point.x(), y + 1) : Point.of(1, 1);
         if (!hasObstacle(newPoint)) {
             setPoint(newPoint);
         }
@@ -126,14 +112,7 @@ public class Rover {
 
     private void goToWest() {
         int x = this.point.x();
-        int y = this.point.y();
-        int limitX = this.limit.x();
-        Point newPoint;
-        if (x > 1) {
-            newPoint = Point.of(x - 1, y);
-        } else {
-            newPoint = Point.of(limitX, y);
-        }
+        Point newPoint = x > 1 ? Point.of(x - 1, this.point.y()) : Point.of(this.limit.x(), this.point.y());
         if (!hasObstacle(newPoint)) {
             setPoint(newPoint);
         }
@@ -141,14 +120,7 @@ public class Rover {
 
     private void goToEast() {
         int x = this.point.x();
-        int y = this.point.y();
-        int limitX = this.limit.x();
-        Point newPoint;
-        if (x < limitX) {
-            newPoint = Point.of(x + 1, y);
-        } else {
-            newPoint = Point.of(1, y);
-        }
+        Point newPoint = x < this.limit.x() ? Point.of(x + 1, this.point.y()) : Point.of(1, this.point.y());
         if (!hasObstacle(newPoint)) {
             setPoint(newPoint);
         }
