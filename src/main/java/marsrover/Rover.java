@@ -127,10 +127,14 @@ public class Rover {
         int x = this.point.x();
         int y = this.point.y();
         int limitX = this.limit.x();
+        Point newPoint;
         if (x > 1) {
-            setPoint(Point.of(x - 1, y));
+            newPoint = Point.of(x - 1, y);
         } else {
-            setPoint(Point.of(limitX, y));
+            newPoint = Point.of(limitX, y);
+        }
+        if (!hasObstacle(newPoint)) {
+            setPoint(newPoint);
         }
     }
 
