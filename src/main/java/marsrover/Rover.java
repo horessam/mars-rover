@@ -46,6 +46,7 @@ public class Rover {
             case BACKWARD_COMMAND -> backward();
             case TURN_RIGHT_COMMAND -> turnRight();
             case TURN_LEFT_COMMAND -> turnLeft();
+            default -> throw new IllegalStateException("Unexpected value: " + command);
         }
     }
 
@@ -114,15 +115,6 @@ public class Rover {
         }
     }
 
-    private boolean hasObstacle(Point roverNewPoint) {
-        for (Point obstacle : obstacles)
-            if (obstacle.equals(roverNewPoint)) {
-                return true;
-            }
-        return false;
-    }
-
-
     private void goToWest() {
         int x = this.point.x();
         int y = this.point.y();
@@ -151,5 +143,13 @@ public class Rover {
         if (!hasObstacle(newPoint)) {
             setPoint(newPoint);
         }
+    }
+
+    private boolean hasObstacle(Point roverNewPoint) {
+        for (Point obstacle : obstacles)
+            if (obstacle.equals(roverNewPoint)) {
+                return true;
+            }
+        return false;
     }
 }

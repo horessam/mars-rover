@@ -421,4 +421,13 @@ public class RoverTest {
         Assertions.assertEquals(Direction.E, rover.getDirection());
     }
 
+    @Test
+    public void should_return_exception_when_command_does_not_exist() {
+        // Given
+        Rover rover = new Rover(Point.of(4, 1), Direction.E, limit, obstacles);
+
+        // Then
+        Assertions.assertThrows(IllegalStateException.class, () -> rover.execute('Z'));
+    }
+
 }
