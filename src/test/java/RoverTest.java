@@ -57,4 +57,17 @@ public class RoverTest {
         Assertions.assertEquals(Direction.W, rover.getDirection());
     }
 
+    @Test
+    public void should_ends_at_0_1_N_when_start_at_0_0_N_and_execute_forward_command() {
+        //Given
+        Rover rover = new Rover(Point.of(0, 0), Direction.N);
+
+        //When
+        rover.execute(FORWARD_COMMAND);
+
+        //Then
+        Assertions.assertEquals(Point.of(0, 1), rover.getPoint());
+        Assertions.assertEquals(Direction.N, rover.getDirection());
+    }
+
 }

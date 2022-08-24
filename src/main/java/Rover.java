@@ -39,6 +39,11 @@ public class Rover {
                     case BACKWARD_COMMAND -> goToEast();
                 }
             }
+            case N -> {
+                if (FORWARD_COMMAND == command) {
+                    setPoint(Point.of(this.point.x(), this.point.y() + 1));
+                }
+            }
         }
     }
 
