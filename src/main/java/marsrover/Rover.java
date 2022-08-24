@@ -81,7 +81,12 @@ public class Rover {
     }
 
     private void goToSouth() {
-        setPoint(Point.of(this.point.x(), this.point.y() - 1));
+        int y = this.point.y();
+        if (y > 1) {
+            setPoint(Point.of(this.point.x(), this.point.y() - 1));
+        } else {
+            setPoint(Point.of(this.limit.x(), this.point.y()));
+        }
     }
 
     private void goToNorth() {
