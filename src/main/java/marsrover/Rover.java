@@ -90,7 +90,12 @@ public class Rover {
     }
 
     private void goToNorth() {
-        setPoint(Point.of(this.point.x(), this.point.y() + 1));
+        int y = this.point.y();
+        if (y < this.limit.y()) {
+            setPoint(Point.of(this.point.x(), y + 1));
+        } else {
+            setPoint(Point.of(1, 1));
+        }
     }
 
     private void goToWest() {
