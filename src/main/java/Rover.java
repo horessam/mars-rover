@@ -40,8 +40,9 @@ public class Rover {
                 }
             }
             case N -> {
-                if (FORWARD_COMMAND == command) {
-                    setPoint(Point.of(this.point.x(), this.point.y() + 1));
+                switch (command) {
+                    case FORWARD_COMMAND -> setPoint(Point.of(this.point.x(), this.point.y() + 1));
+                    case BACKWARD_COMMAND -> setPoint(Point.of(this.point.x(), this.point.y() - 1));
                 }
             }
         }
