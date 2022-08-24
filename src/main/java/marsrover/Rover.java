@@ -40,7 +40,14 @@ public class Rover {
         this.direction = direction;
     }
 
-    public void execute(char command) {
+
+    public void execute(String sequenceCommand) {
+        for (int i = 0; i < sequenceCommand.length(); i++) {
+            execute(sequenceCommand.charAt(i));
+        }
+    }
+
+    private void execute(char command) {
         switch (command) {
             case FORWARD_COMMAND -> forward();
             case BACKWARD_COMMAND -> backward();
@@ -106,7 +113,7 @@ public class Rover {
         int limitY = this.limit.y();
         Point newPoint;
         if (y < limitY) {
-            newPoint = Point.of(x, y+1);
+            newPoint = Point.of(x, y + 1);
         } else {
             newPoint = Point.of(1, 1);
         }
@@ -152,4 +159,5 @@ public class Rover {
             }
         return false;
     }
+
 }

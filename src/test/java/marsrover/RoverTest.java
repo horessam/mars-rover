@@ -9,10 +9,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class RoverTest {
-    private static final char FORWARD_COMMAND = 'F';
-    private static final char BACKWARD_COMMAND = 'B';
-    private static final char TURN_RIGHT_COMMAND = 'R';
-    private static final char TURN_LEFT_COMMAND = 'L';
+    private static final String FORWARD_COMMAND = "F";
+    private static final String BACKWARD_COMMAND = "B";
+    private static final String TURN_RIGHT_COMMAND = "R";
+    private static final String TURN_LEFT_COMMAND = "L";
 
     private final Point limit = Point.of(5, 5);
 
@@ -427,7 +427,20 @@ public class RoverTest {
         Rover rover = new Rover(Point.of(4, 1), Direction.E, limit, obstacles);
 
         // Then
-        Assertions.assertThrows(IllegalStateException.class, () -> rover.execute('Z'));
+        Assertions.assertThrows(IllegalStateException.class, () -> rover.execute("Z"));
+    }
+
+    @Test
+    public void should_ends_at_1_3_N_when_start_at_1_1_N_and_execute_sequence_command_FFF() {
+        //Given
+        Rover rover = new Rover(Point.of(1, 1), Direction.N, limit, Collections.emptyList());
+
+        //When
+        rover.execute("FFF");
+
+        //Then
+        Assertions.assertEquals(Point.of(1, 4), rover.getPoint());
+        Assertions.assertEquals(Direction.N, rover.getDirection());
     }
 
 }
