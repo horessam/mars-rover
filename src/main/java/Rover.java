@@ -26,11 +26,27 @@ public class Rover {
     }
 
     public void execute(char command) {
-        if (FORWARD_COMMAND == command) {
-            setPoint(Point.of(this.point.x() + 1, this.point.y()));
+        switch (this.direction) {
+            case E -> {
+                switch (command) {
+                    case FORWARD_COMMAND -> goToEast();
+                    case BACKWARD_COMMAND -> goToWest();
+                }
+            }
+            case W -> {
+                switch (command) {
+                    case FORWARD_COMMAND -> goToWest();
+                    case BACKWARD_COMMAND -> goToEast();
+                }
+            }
         }
-        if (BACKWARD_COMMAND == command) {
-            setPoint(Point.of(this.point.x() - 1, this.point.y()));
-        }
+    }
+
+    private void goToWest() {
+        setPoint(Point.of(this.point.x() - 1, this.point.y()));
+    }
+
+    private void goToEast() {
+        setPoint(Point.of(this.point.x() + 1, this.point.y()));
     }
 }
