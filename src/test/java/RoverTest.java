@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 public class RoverTest {
     private static final char FORWARD_COMMAND = 'F';
     private static final char BACKWARD_COMMAND = 'B';
+    private static final char TURN_RIGHT_COMMAND = 'R';
+    private static final char TURN_LEFT_COMMAND = 'L';
 
     @Test
     public void should_ends_at_1_0_E_when_start_at_0_0_E_and_execute_forward_command() {
@@ -107,6 +109,32 @@ public class RoverTest {
         //Then
         Assertions.assertEquals(Point.of(0, 1), rover.getPoint());
         Assertions.assertEquals(Direction.S, rover.getDirection());
+    }
+
+    @Test
+    public void should_ends_at_0_0_E_when_start_at_0_0_N_and_execute_right_command() {
+        //Given
+        Rover rover = new Rover(Point.of(0, 0), Direction.N);
+
+        //When
+        rover.execute(TURN_RIGHT_COMMAND);
+
+        //Then
+        Assertions.assertEquals(Point.of(0, 0), rover.getPoint());
+        Assertions.assertEquals(Direction.E, rover.getDirection());
+    }
+
+    @Test
+    public void should_ends_at_0_0_W_when_start_at_0_0_N_and_execute_left_command() {
+        //Given
+        Rover rover = new Rover(Point.of(0, 0), Direction.N);
+
+        //When
+        rover.execute(TURN_LEFT_COMMAND);
+
+        //Then
+        Assertions.assertEquals(Point.of(0, 0), rover.getPoint());
+        Assertions.assertEquals(Direction.W, rover.getDirection());
     }
 
 }

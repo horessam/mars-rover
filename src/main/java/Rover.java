@@ -1,6 +1,8 @@
 public class Rover {
     public static final char FORWARD_COMMAND = 'F';
     private static final char BACKWARD_COMMAND = 'B';
+    private static final char TURN_RIGHT_COMMAND = 'R';
+    private static final char TURN_LEFT_COMMAND = 'L';
     private Point point;
     private Direction direction;
 
@@ -41,6 +43,16 @@ public class Rover {
                     case W -> goToEast();
                     case N -> goToSouth();
                     case S -> goToNorth();
+                }
+            }
+            case TURN_RIGHT_COMMAND -> {
+                switch (this.direction) {
+                    case N -> setDirection(Direction.E);
+                }
+            }
+            case TURN_LEFT_COMMAND -> {
+                switch (this.direction) {
+                    case N -> setDirection(Direction.W);
                 }
             }
         }
