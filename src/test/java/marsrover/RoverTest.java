@@ -1,8 +1,12 @@
 package marsrover;
 
+import org.junit.After;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,8 +18,19 @@ public class RoverTest {
     private static final String TURN_LEFT_COMMAND = "L";
 
     private final Point maxPoint = Point.of(5, 5);
-
     private final List<Point> obstacles = new ArrayList<>(Arrays.asList(Point.of(1, 2), Point.of(3, 1)));
+
+    private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+
+    @BeforeEach
+    public void setUp() {
+        System.setOut(new PrintStream(outputStreamCaptor));
+    }
+
+    @After
+    public void restoreStreams() {
+        System.setOut(System.out);
+    }
 
     @Test
     public void should_ends_at_1_0_E_when_start_at_0_0_E_and_execute_forward_command() {
@@ -340,6 +355,7 @@ public class RoverTest {
         //Then
         Rover expectedRover = new Rover(Point.of(1, 1), Direction.N, maxPoint);
         Assertions.assertEquals(expectedRover, rover);
+        Assertions.assertEquals("Obstacle reported at: Point {x=1, y=2}", outputStreamCaptor.toString().trim());
     }
 
     @Test
@@ -353,6 +369,7 @@ public class RoverTest {
         //Then
         Rover expectedRover = new Rover(Point.of(1, 1), Direction.S, maxPoint);
         Assertions.assertEquals(expectedRover, rover);
+        Assertions.assertEquals("Obstacle reported at: Point {x=1, y=2}", outputStreamCaptor.toString().trim());
     }
 
     @Test
@@ -366,6 +383,7 @@ public class RoverTest {
         //Then
         Rover expectedRover = new Rover(Point.of(2, 1), Direction.E, maxPoint);
         Assertions.assertEquals(expectedRover, rover);
+        Assertions.assertEquals("Obstacle reported at: Point {x=3, y=1}", outputStreamCaptor.toString().trim());
     }
 
     @Test
@@ -379,6 +397,7 @@ public class RoverTest {
         //Then
         Rover expectedRover = new Rover(Point.of(2, 1), Direction.W, maxPoint);
         Assertions.assertEquals(expectedRover, rover);
+        Assertions.assertEquals("Obstacle reported at: Point {x=3, y=1}", outputStreamCaptor.toString().trim());
     }
 
     @Test
@@ -392,6 +411,7 @@ public class RoverTest {
         //Then
         Rover expectedRover = new Rover(Point.of(1, 3), Direction.S, maxPoint);
         Assertions.assertEquals(expectedRover, rover);
+        Assertions.assertEquals("Obstacle reported at: Point {x=1, y=2}", outputStreamCaptor.toString().trim());
     }
 
     @Test
@@ -405,6 +425,7 @@ public class RoverTest {
         //Then
         Rover expectedRover = new Rover(Point.of(1, 3), Direction.N, maxPoint);
         Assertions.assertEquals(expectedRover, rover);
+        Assertions.assertEquals("Obstacle reported at: Point {x=1, y=2}", outputStreamCaptor.toString().trim());
     }
 
     @Test
@@ -418,6 +439,7 @@ public class RoverTest {
         //Then
         Rover expectedRover = new Rover(Point.of(4, 1), Direction.W, maxPoint);
         Assertions.assertEquals(expectedRover, rover);
+        Assertions.assertEquals("Obstacle reported at: Point {x=3, y=1}", outputStreamCaptor.toString().trim());
     }
 
     @Test
@@ -431,6 +453,7 @@ public class RoverTest {
         //Then
         Rover expectedRover = new Rover(Point.of(4, 1), Direction.E, maxPoint);
         Assertions.assertEquals(expectedRover, rover);
+        Assertions.assertEquals("Obstacle reported at: Point {x=3, y=1}", outputStreamCaptor.toString().trim());
     }
 
     @Test

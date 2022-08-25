@@ -3,7 +3,10 @@ package marsrover;
 import java.util.Collections;
 import java.util.List;
 
-import static marsrover.Direction.*;
+import static marsrover.Direction.E;
+import static marsrover.Direction.N;
+import static marsrover.Direction.S;
+import static marsrover.Direction.W;
 
 public class Rover {
     private static final char FORWARD_COMMAND = 'F';
@@ -126,7 +129,11 @@ public class Rover {
     }
 
     private boolean hasObstacle(Point point) {
-        return obstacles.stream().anyMatch(obstacle -> obstacle.equals(point));
+        if (obstacles.stream().anyMatch(obstacle -> obstacle.equals(point))) {
+            System.out.println("Obstacle reported at: " + point);
+            return true;
+        }
+        return false;
     }
 
     @Override
