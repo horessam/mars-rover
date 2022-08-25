@@ -1,11 +1,9 @@
 package marsrover;
 
+import java.util.Collections;
 import java.util.List;
 
-import static marsrover.Direction.E;
-import static marsrover.Direction.N;
-import static marsrover.Direction.S;
-import static marsrover.Direction.W;
+import static marsrover.Direction.*;
 
 public class Rover {
     private static final char FORWARD_COMMAND = 'F';
@@ -13,24 +11,31 @@ public class Rover {
     private static final char TURN_RIGHT_COMMAND = 'R';
     private static final char TURN_LEFT_COMMAND = 'L';
 
-    private final Point limit;
+    private final Point maxPoint;
     private final List<Point> obstacles;
 
     private Point point;
     private Direction direction;
 
-    public Rover(Point point, Direction direction, Point limit, List<Point> obstacles) {
+    public Rover(Point point, Direction direction, Point maxPoint, List<Point> obstacles) {
         this.point = point;
         this.direction = direction;
-        this.limit = limit;
+        this.maxPoint = maxPoint;
         this.obstacles = obstacles;
+    }
+
+    public Rover(Point point, Direction direction, Point maxPoint) {
+        this.point = point;
+        this.direction = direction;
+        this.maxPoint = maxPoint;
+        this.obstacles = Collections.emptyList();
     }
 
     public Point getPoint() {
         return point;
     }
 
-    public void setPoint(Point point) {
+    private void setPoint(Point point) {
         if (!hasObstacle(point)) {
             this.point = point;
         }
@@ -40,7 +45,7 @@ public class Rover {
         return direction;
     }
 
-    public void setDirection(Direction direction) {
+    private void setDirection(Direction direction) {
         this.direction = direction;
     }
 
@@ -56,7 +61,7 @@ public class Rover {
             case BACKWARD_COMMAND -> backward();
             case TURN_RIGHT_COMMAND -> turnRight();
             case TURN_LEFT_COMMAND -> turnLeft();
-            default -> throw new IllegalStateException("Unexpected value: " + command);
+            default -> throw new IllegalArgumentException("Unexpected value: " + command);
         }
     }
 
@@ -98,34 +103,37 @@ public class Rover {
 
     private void goToSouth() {
         int y = this.point.y();
-        Point newPoint = y > 1 ? Point.of(this.point.x(), y - 1) : Point.of(this.limit.x(), y);
+        Point newPoint = y > 1 ? Point.of(this.point.x(), y - 1) : Point.of(this.maxPoint.x(), y);
         setPoint(newPoint);
     }
 
     private void goToNorth() {
         int y = this.point.y();
-        Point newPoint = y < this.limit.y() ? Point.of(this.point.x(), y + 1) : Point.of(1, 1);
+        Point newPoint = y < this.maxPoint.y() ? Point.of(this.point.x(), y + 1) : Point.of(1, 1);
         setPoint(newPoint);
     }
 
     private void goToWest() {
         int x = this.point.x();
-        Point newPoint = x > 1 ? Point.of(x - 1, this.point.y()) : Point.of(this.limit.x(), this.point.y());
+        Point newPoint = x > 1 ? Point.of(x - 1, this.point.y()) : Point.of(this.maxPoint.x(), this.point.y());
         setPoint(newPoint);
     }
 
     private void goToEast() {
         int x = this.point.x();
-        Point newPoint = x < this.limit.x() ? Point.of(x + 1, this.point.y()) : Point.of(1, this.point.y());
+        Point newPoint = x < this.maxPoint.x() ? Point.of(x + 1, this.point.y()) : Point.of(1, this.point.y());
         setPoint(newPoint);
     }
 
     private boolean hasObstacle(Point point) {
-        for (Point obstacle : obstacles)
-            if (obstacle.equals(point)) {
-                return true;
-            }
-        return false;
+        return obstacles.stream().anyMatch(obstacle -> obstacle.equals(point));
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rover rover = (Rover) o;
+        return getPoint().equals(rover.getPoint()) && getDirection() == rover.getDirection();
+    }
 }
